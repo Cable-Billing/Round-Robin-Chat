@@ -16,3 +16,9 @@ git clone https://github.com/DoneRaging/Round-Robin-Chat.git
 ```bash
 npm install
 ```
+
+## Start Application
+
+```bash
+npm start
+```
