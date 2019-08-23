@@ -1,0 +1,36 @@
+{
+    "rooms": {
+        "00a9ff": {
+            "id": "00a9ff",
+            "name": "The Game",
+            "participants": [
+                {
+                    "name": "Bob",
+                    "id": 1095632
+                },
+                {
+                    "name": "Anna",
+                    "id": 4294712
+                },
+                {
+                    "name": "Lukas",
+                    "id": 7728621
+                }
+            ]
+        }
+    },
+    "users": {
+        "1095632": {
+            "name": "Bob",
+            "id": 1095632
+        },
+        "4294712": {
+            "name": "Anna",
+            "id": 4294712
+        },
+        "7728621": {
+            "name": "Lukas",
+            "id": 7728621
+        }
+    }
+}
