@@ -5,26 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>roundrobin.chat</title>
-    <link rel="stylesheet" href="stylesheet.css">
-    <meta http-equiv="refresh" content="5"><!-- Refresh every 10s for dev -->
+    <link rel="stylesheet" href="static/stylesheets/stylesheet.css">
+    <script src="static/scripts/angular.min.js" type="text/javascript"></script>
+    <script src="static/scripts/app.js" type="text/javascript"></script>
 </head>
-<body>
+<body ng-app="app" ng-controller="body">
     <div class="theAllEncompassingContainerOfOmnipotence">
         <div class="callWindow">
             <div class="roomDetails">
-                <h1 class="title">Tom, Dick, and Harry's Funtime Extravaganza</h1>
+                <h1 class="title" ng-bind="room.name"></h1>
             </div>
             <div class="participantScroller">
-                <div class="participant lastParticipant"><img class="icon" src="https://photos.laineygossip.com/articles/tom-cruise-mummy-30may17-17.jpg"></div>
-                <div class="participant currentParticipant"><img class="icon" src="http://afflictor.com/wp-content/uploads/2010/02/Dick_Cheney.jpg.jpeg"></div>
-                <div class="participant nextParticipant"><img class="icon" src="https://www.allthetests.com/quiz31/picture/pic_1404655017_1.jpg"></div>
+                <div class="participant lastParticipant"><img class="icon" ng-src="{{getParticipantRelative(-1).imageUrl}}"></div>
+                <div class="participant currentParticipant"><img class="icon" ng-src="{{getParticipantRelative(0).imageUrl}}"></div>
+                <div class="participant nextParticipant"><img class="icon" ng-src="{{getParticipantRelative(1).imageUrl}}"></div>
             </div>
-            <div class="counter">
-                06:53
+            <div class="counter" ng-bind="formattedTimeUntilNextTurn()">
+
             </div>
             <div class="callControls">
-                <button class="connect connected clickable"><!-- It's called 'Connect' but it does both -->
-                    Disconnect
+                <button class="connect clickable"
+                        ng-class="connected ? 'connected' : 'disconnected'"
+                        ng-click="connectClick()"
+                        ng-bind="connected ? 'Disconnect' : 'Connect'"><!-- It's called 'Connect' but it does both -->
                 </button>
             </div>
         </div>
