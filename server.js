@@ -2,6 +2,7 @@ var express = require('express'); // Express
 var fs = require('fs'); // FileSystem
 var path = require('path'); // File/directory path parsing
 var bodyParser = require('body-parser'); // Data conversion, JSON parsing
+var uuid = require('uuid/v4'); // UUID generation
 
 // Set up Express
 var api  = express();
@@ -9,12 +10,10 @@ var api  = express();
 api.use(express.static("./"));
 api.use(express.json());
 
-var data = fs.readFileSync('./default_news.json');
+var data = loadData();
 
 // Get information for room with roomId
 api.get("/room/:roomId", function(req, res) {
-    var data = data;
-
     if (req.params.roomId in data.rooms) {
         res.send(data.rooms[req.params.roomId]);
     } else {
@@ -24,8 +23,6 @@ api.get("/room/:roomId", function(req, res) {
 
 // Gets information for user with userId
 api.get("/user/:userId", function(req, res) {
-    var data = data;
-
     if (req.params.userId in data.users) {
         res.send(data.users[req.params.userId]);
     } else {
@@ -33,9 +30,26 @@ api.get("/user/:userId", function(req, res) {
     }
 });
 
-// News route, digest received post JSON
-api.post("/writenews", function(req, res) {
-    handlePost(req, res);
+// Registers a new user with the name they provide
+api.post("/register", function(req, res) {
+    // Make sure we have data to work on
+    if (!req.body || !req.body.name) {
+        res.status(400).send();
+        return;
+    }
+
+    // Generate a new ID and add them to the user list
+    var id = uuid();
+    data.users[id] = {
+        "name": req.body.name,
+        "id": id
+    };
+
+    // Save to disk
+    saveData();
+
+    // Reply with the new user object
+    res.send(data.users[id]);
 });
 
 // Start listening
@@ -43,20 +57,20 @@ api.listen(2019, function (){
     console.log("Listening on port 2019");
 });
 
-// Read and return current posts
-function handleGetPosts(req, res)
-{
-    var data = fs.readFileSync('./default_news.json');
-    var json = JSON.parse(data);
-    res.send(json);
+function loadData() {
+    var file = fs.readFileSync('./data.json');
+    var json = JSON.parse(file);
+    console.log("Loaded JSON");
+    return json;
 }
 
 function saveData() {
-    fs.writeFile('./default_news.json', JSON.stringify(json), (err) => {
+    fs.writeFile('./data.json', JSON.stringify(data), (err) => {
         if (err)
         {
             throw err;
         }
+
         console.log("Saved JSON");
     });
 }
