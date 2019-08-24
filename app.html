@@ -10,34 +10,32 @@
     <script src="static/scripts/app.js" type="text/javascript"></script>
 </head>
 <body ng-app="app" ng-controller="body">
-    <div class="theAllEncompassingContainerOfOmnipotence">
-        <div class="callWindow">
-            <div class="roomDetails">
-                <h1 class="title" ng-bind="room.name"></h1>
-            </div>
-            <div class="participantScroller">
-                <div class="participant lastParticipant"><img class="icon" ng-src="{{getParticipantRelative(-1).imageUrl}}"></div>
-                <div class="participant currentParticipant"><img class="icon" ng-src="{{getParticipantRelative(0).imageUrl}}"></div>
-                <div class="participant nextParticipant"><img class="icon" ng-src="{{getParticipantRelative(1).imageUrl}}"></div>
-            </div>
-            <div class="counter" ng-bind="formattedTimeUntilNextTurn()"></div>
-            <div class="callControls">
-                <button class="connect clickable"
-                        ng-class="connected ? 'connected' : 'disconnected'"
-                        ng-click="connectClick()"
-                        ng-bind="connected ? 'Disconnect' : 'Connect'"><!-- It's called 'Connect' but it does both -->
-                </button>
-            </div>
+    <div class="callWindow">
+        <div class="roomDetails">
+            <h1 class="title" ng-bind="room.name"></h1>
         </div>
-        <div class="sidebar">
-            <div class="menuBar">
-                <div class="expandCollapseArrow clickable"></div>
-            </div>
-            <div class="userList" ng-repeat="participantID in room.participants">
-                <div class="userListCard">
-                    <img class="icon" ng-src="{{getParticipantByID(participantID).imageUrl}}">
-                    <span ng-bind="getParticipantByID(participantID).name"></span>
-                </div>
+        <div class="participantScroller">
+            <div class="participant lastParticipant"><img class="icon" ng-src="{{getParticipantRelative(-1).imageUrl}}"></div>
+            <div class="participant currentParticipant"><img class="icon" ng-src="{{getParticipantRelative(0).imageUrl}}"></div>
+            <div class="participant nextParticipant"><img class="icon" ng-src="{{getParticipantRelative(1).imageUrl}}"></div>
+        </div>
+        <div class="counter" ng-bind="formattedTimeUntilNextTurn()"></div>
+        <div class="callControls">
+            <button class="connect clickable"
+                    ng-class="connected ? 'connected' : 'disconnected'"
+                    ng-click="connectClick()"
+                    ng-bind="connected ? 'Disconnect' : 'Connect'"><!-- It's called 'Connect' but it does both -->
+            </button>
+        </div>
+    </div>
+    <div class="sidebar">
+        <div class="menuBar">
+            <div class="expandCollapseArrow clickable"></div>
+        </div>
+        <div class="userList" ng-repeat="participantID in room.participants">
+            <div class="userListCard">
+                <img class="icon" ng-src="{{getParticipantByID(participantID).imageUrl}}">
+                <span ng-bind="getParticipantByID(participantID).name"></span>
             </div>
         </div>
     </div>
