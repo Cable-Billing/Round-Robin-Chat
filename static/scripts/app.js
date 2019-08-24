@@ -82,6 +82,13 @@ app.controller("body",
                 return $scope.users[participantID.toString()];
             }
 
+            $scope.getParticipantByID = function(id)
+            {
+                if (!(id.toString() in $scope.users)) throw "The participant with id '" + id + "' does not exist in the user list";
+
+                return $scope.users[id.toString()];
+            }
+
             $scope.timeUntilNextTurn = () => Math.max(new Date($scope.room.nextTurn) - new Date(), 0);
             $scope.formattedTimeUntilNextTurn = () => Math.max(($scope.timeUntilNextTurn()/1000), 0).toFixed(2); // Just manually format the damn thing
 

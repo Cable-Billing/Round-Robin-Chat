@@ -20,9 +20,7 @@
                 <div class="participant currentParticipant"><img class="icon" ng-src="{{getParticipantRelative(0).imageUrl}}"></div>
                 <div class="participant nextParticipant"><img class="icon" ng-src="{{getParticipantRelative(1).imageUrl}}"></div>
             </div>
-            <div class="counter" ng-bind="formattedTimeUntilNextTurn()">
-
-            </div>
+            <div class="counter" ng-bind="formattedTimeUntilNextTurn()"></div>
             <div class="callControls">
                 <button class="connect clickable"
                         ng-class="connected ? 'connected' : 'disconnected'"
@@ -33,21 +31,12 @@
         </div>
         <div class="sidebar">
             <div class="menuBar">
-                <!-- Hamburger for showing/hiding the sidebar? -->
                 <div class="expandCollapseArrow clickable"></div>
             </div>
-            <div class="userList">
+            <div class="userList" ng-repeat="participantID in room.participants">
                 <div class="userListCard">
-                    <img class="icon" src="https://photos.laineygossip.com/articles/tom-cruise-mummy-30may17-17.jpg">
-                    <span>Tom</span>
-                </div>
-                <div class="userListCard">
-                    <img class="icon" src="http://afflictor.com/wp-content/uploads/2010/02/Dick_Cheney.jpg.jpeg">
-                    <span>Dick</span>
-                </div>
-                <div class="userListCard">
-                    <img class="icon" src="https://www.allthetests.com/quiz31/picture/pic_1404655017_1.jpg">
-                    <span>Harry</span>
+                    <img class="icon" ng-src="{{getParticipantByID(participantID).imageUrl}}">
+                    <span ng-bind="getParticipantByID(participantID).name"></span>
                 </div>
             </div>
         </div>
