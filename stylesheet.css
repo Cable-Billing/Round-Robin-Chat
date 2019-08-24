@@ -1,0 +1,185 @@
+@import url('https://fonts.googleapis.com/css?family=Karla|Poppins|Roboto&display=swap');
+
+*
+{
+    box-sizing: border-box;
+}
+
+body
+{
+    font-family: 'Roboto', sans-serif;
+
+    margin: 0;
+    padding: 0;
+
+    color: #eee;
+    background-color: #1e253b; /* We'll use this until we colour-pick */
+}
+
+.callWindow
+{
+    display: flex;
+    float: left;
+    flex-direction: column;
+
+    width: calc(100% - 300px);
+    height: 100vh;
+}
+.callWindow .roomDetails
+{
+    display: flex;
+
+    height: 100px;
+
+    vertical-align: center;
+
+    align-items: flex-end;
+    justify-content: center;
+}
+.callWindow .participantScroller
+{
+    display: flex;
+
+    width: 100%;
+
+    flex-grow: 1;
+    align-content: center;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.callWindow .participantScroller .participant
+{
+    display: flex;
+
+    flex-grow: 1;
+    align-content: center;
+    justify-content: center;
+}
+.callWindow .participantScroller .participant img
+{
+    width: 200px;
+    height: 200px;
+
+    box-shadow: 1px 1px 10px 0 rgba(0,0,0,.5);
+}
+.callWindow .participantScroller .participant.currentParticipant img
+{
+    width: 300px;
+    height: 300px;
+
+    box-shadow: 5px 5px 20px 0 rgba(0,0,0,.5);
+}
+.callWindow .counter
+{
+    font-size: 50pt;
+
+    display: flex;
+
+    flex-grow: 1;
+    align-items: flex-start;
+    justify-content: center;
+}
+.callWindow .callControls
+{
+    display: flex;
+
+    height: 70px;
+
+    flex-flow: row;
+    align-items: center;
+    justify-content: center;
+}
+.callWindow .callControls .connect
+{
+    font-size: 20pt;
+
+    padding-top: 10px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+
+    border: 0;
+    border-radius: 10px;
+    outline: none !important;
+    box-shadow: 1px 1px 10px 0 rgba(0,0,0,.5);
+
+    align-self: flex-start;
+}
+.callWindow .callControls .connect.connected
+{
+    color: #eee;
+    background-color: #dd5049;
+}
+.callWindow .callControls .connect.disconnected
+{
+    color: #eee;
+    background-color: #549e47;
+}
+
+.sidebar
+{
+    float: right;
+
+    width: 300px;
+    height: 100vh;
+
+    background-color: rgba(255,255,255,.05);
+}
+.sidebar .menuBar
+{
+    display: flex;
+
+    width: 100%;
+    height: 50px;
+    padding-right: 10px;
+    padding-left: 10px;
+
+    background-color: rgba(0,0,0,.15);
+
+    align-items: center;
+}
+.sidebar .menuBar .expandCollapseArrow
+{
+    width: 20px;
+    height: 20px;
+    margin-left: 10px;
+
+    opacity: .8;
+    background-image: url('img/chevron-right.svg');
+    background-position: center;
+    background-size: contain;
+
+    filter: invert(100%);
+}
+.sidebar .userList .userListCard
+{
+    display: flex;
+
+    width: 100%;
+    height: 50px;
+    padding-right: 10px;
+    padding-left: 10px;
+
+    vertical-align: middle;
+
+    align-items: center;
+}
+.sidebar .userList .userListCard img
+{
+    width: 40px;
+    height: 40px;
+    margin-right: 5px;
+}
+.sidebar .userList .userListCard span
+{
+    line-height: 100%;
+}
+
+.icon
+{
+    border-radius: 50%; /* Circular */
+}
+.clickable
+{
+    cursor: pointer;
+}
