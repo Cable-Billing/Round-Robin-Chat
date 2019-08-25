@@ -78,7 +78,7 @@ function loadData() {
 }
 
 function saveData() {
-    fs.writeFile('./data.json', JSON.stringify(data), (err) => {
+    fs.writeFile('./data.json', JSON.stringify(data, null, 4), (err) => {
         if (err)
         {
             throw err;
