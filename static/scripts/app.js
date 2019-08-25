@@ -18,7 +18,7 @@ app.controller("body",
             // FOR DEMONSTRATION ONLY, NEEDS REWRITE
             $scope.room = {
                 "id": "00a9ff",
-                "name": "Tom, Dick, and Harry's Funtime Extravaganza",
+                "name": "Tom, Dick, and Harry's group call",
                 "host": "1095632",
                 "currentSpeaker": "4294712",
                 "nextTurn": new Date().getTime() + 10000,
