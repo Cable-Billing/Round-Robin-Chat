@@ -143,7 +143,6 @@ app.controller("body",
                 if ($scope.timeUntilNextTurn() <= 0)
                 {
                     $scope.cycleParticipants();
-                    $scope.room.nextTurn = new Date().getTime() + 10000;
                 }
             }
             $interval($scope.updateTurnTimeRemaining, 41);
@@ -153,13 +152,19 @@ app.controller("body",
                 var newParticipantIndex = $scope.currentParticipantIndex() + 1;
                 if (newParticipantIndex >= $scope.room.participants.length) newParticipantIndex = 0;
                 $scope.room.currentSpeaker = $scope.room.participants[newParticipantIndex];
-                $scope.room.nextTurn = new Date().getTime() + 10000;
+                if ($scope.isMyTurn()) {
+                    $scope.room.nextTurn = new Date().getTime() + 10000 + $scope.extraTime;
+                    $scope.extraTime = 0;
+                } else {
+                    $scope.room.nextTurn = new Date().getTime() + 10000;
+                }
             }
 
             $scope.skipTurn = function() {
                 if ($scope.isMyTurn()) {
+                    // FOR DEMONSTRATION ONLY, NEEDS REWRITE
+                    $scope.extraTime = $scope.timeUntilNextTurn();
                     $scope.cycleParticipants();
-                    // TODO: Save the remaining time somewhere???
                 }
             }
         }
