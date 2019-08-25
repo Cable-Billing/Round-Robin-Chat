@@ -88,6 +88,9 @@ app.controller("body",
                     // Remove the sample user from the user list
                     $scope.users.splice($scope.users.findIndex(user => user.id == sampleUser.id), 1);
 
+                    // Reset extra time
+                    $scope.extraTime = 0;
+
                     // Clear 'me'
                     $scope.me = undefined;
 
