@@ -15,9 +15,9 @@
             <h1 class="title" ng-bind="room.name"></h1>
         </div>
         <div class="participantScroller">
-            <div class="participant lastParticipant"><img class="icon" ng-src="{{getParticipantRelative(-1).imageUrl}}"></div>
-            <div class="participant currentParticipant"><img class="icon" ng-src="{{getParticipantRelative(0).imageUrl}}"></div>
             <div class="participant nextParticipant"><img class="icon" ng-src="{{getParticipantRelative(1).imageUrl}}"></div>
+            <div class="participant currentParticipant"><img class="icon" ng-src="{{getParticipantRelative(0).imageUrl}}"></div>
+            <div class="participant lastParticipant"><img class="icon" ng-src="{{getParticipantRelative(-1).imageUrl}}"></div>
         </div>
         <div class="counter" ng-bind="formattedTimeUntilNextTurn()"></div>
         <div class="callControls">
