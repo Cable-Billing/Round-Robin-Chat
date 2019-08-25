@@ -1,36 +1,35 @@
 {
     "rooms": {
-        "00a9ff": {
-            "id": "00a9ff",
+        "R-89deabb8-47cb-4f18-8a92-27b6efec21ca": {
+            "id": "R-89deabb8-47cb-4f18-8a92-27b6efec21ca",
             "name": "The Game",
+            "host": "U-3d0e8d88-fae8-410f-bf5a-b2121bac421b",
+            "currentSpeaker": "U-a6476a29-e8f5-4175-bb3d-3f31c9e6c954",
+            "turnTimeout": 1566703893000
             "participants": [
-                {
-                    "name": "Bob",
-                    "id": 1095632
-                },
-                {
-                    "name": "Anna",
-                    "id": 4294712
-                },
-                {
-                    "name": "Lukas",
-                    "id": 7728621
-                }
+                "U-3d0e8d88-fae8-410f-bf5a-b2121bac421b",
+                "U-a6476a29-e8f5-4175-bb3d-3f31c9e6c954",
+                "U-0e4d7b23-5106-422d-a2db-bb52ca1c4b5f",
+                "U-e77adf32-9383-4d52-a15a-9e0b3f9f4709"
             ]
         }
     },
     "users": {
-        "1095632": {
+        "U-3d0e8d88-fae8-410f-bf5a-b2121bac421b": {
             "name": "Bob",
-            "id": 1095632
+            "id": "U-3d0e8d88-fae8-410f-bf5a-b2121bac421b"
         },
-        "4294712": {
+        "U-a6476a29-e8f5-4175-bb3d-3f31c9e6c954": {
             "name": "Anna",
-            "id": 4294712
+            "id": "U-a6476a29-e8f5-4175-bb3d-3f31c9e6c954"
         },
-        "7728621": {
+        "U-0e4d7b23-5106-422d-a2db-bb52ca1c4b5f": {
             "name": "Lukas",
-            "id": 7728621
+            "id": "U-0e4d7b23-5106-422d-a2db-bb52ca1c4b5f"
+        },
+        "U-e77adf32-9383-4d52-a15a-9e0b3f9f4709": {
+            "name": "Alex",
+            "id": "U-e77adf32-9383-4d52-a15a-9e0b3f9f4709"
         }
     }
 }
