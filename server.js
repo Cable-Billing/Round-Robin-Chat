@@ -156,6 +156,32 @@ api.get("/api/join/:roomID", function(req, res) {
     res.send(room);
 });
 
+// Remove the user from the room with the given roomID
+api.delete("/api/currentroom", function(req, res) {
+    // Make sure we have data to work on
+    if (!req.cookies["userID"]) {
+        res.status(401).send();
+        return;
+    }
+
+    // Validate the userID they've sent
+    var userID = req.cookies["userID"];
+    var user = data.users.find(user => user.id == userID);
+    if (!user) {res.status(401).send(); return;};
+
+    // Get the room the user is in
+    var room = data.rooms.find(room => room.participants.includes(user.id));
+    if (!room) {res.status(404).send(); return;}
+
+    // Get the userID index and remove it from the array
+    var userIndex = room.participants.indexOf(user.id);
+    room.participants.splice(userIndex, 1);
+    saveData();
+
+    // Send a successful empty response
+    res.status(204).send();
+});
+
 // Start listening
 api.listen(2019, function (){
     console.log("Listening on port 2019");
