@@ -65,6 +65,47 @@ api.post("/api/register", function(req, res) {
     res.send(data.users[id]);
 });
 
+// Get the user's user object
+api.get("/api/me", function(req, res) {
+    // Make sure we have data to work on
+    if (!req.cookies["userID"]) {
+        res.status(401).send();
+    }
+
+    // Check if the user exists
+    var userID = req.cookies["userID"];
+    if (!(userID in data.users)) res.status(404).send();
+
+    // Send their user object
+    res.send(data.users[userID]);
+});
+
+// Adds the user to a room and sends them the info
+api.get("/api/join/:roomID", function(req, res) {
+    // Make sure we have data to work on
+    if (!req.params.roomID) {
+        res.status(400).send();
+        return;
+    } else if (!req.cookies["userID"]) {
+        res.status(401).send();
+    }
+
+    // Validate the user and group IDs they've sent
+    var userID = req.cookies["userID"];
+    var roomID = req.params.roomID;
+    if (!(userID in data.users)) res.status(401).send();
+    if (!(roomID in data.rooms)) res.status(404).send();
+
+    // Add the user to the room if they aren't in it already
+    if (!(userID in data.rooms[roomID].participants)) {
+        data.rooms[roomID].participants.push(userID);
+        saveData();
+    }
+
+    // Send them the room data
+    res.send(data.rooms[roomID]);
+});
+
 // Start listening
 api.listen(2019, function (){
     console.log("Listening on port 2019");
