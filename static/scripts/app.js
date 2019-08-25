@@ -1,5 +1,11 @@
 var app = angular.module("app", []);
 
+var sampleUser = {
+    "name": "Greg (You)",
+    "id": "4559246",
+    "imageUrl": "https://i.imgur.com/pqC2hBL.png"
+};
+
 app.controller("body",
     [
         "$scope",
@@ -45,11 +51,34 @@ app.controller("body",
                 $scope.connected = !$scope.connected;
                 if ($scope.connected)
                 {
-                    // Disconnect
+                    // Freshly-connected
+                    console.log("Connecting...");
+
+                    // Add the sample user to the user list
+                    $scope.users.push(sampleUser);
+
+                    // Add the sample user to the participant list
+                    $scope.room.participants.push(sampleUser.id);
+
+                    console.log($scope.room);
+                    console.log($scope.users);
                 }
                 else
                 {
-                    // Connect
+                    // Disconnecting
+                    console.log("Disconnecting...");
+
+                    // Move to the next participant if we're currently speaking
+                    if ($scope.room.currentSpeaker == sampleUser.id) $scope.cycleParticipants();
+
+                    // Remove the sample user from the participant list
+                    $scope.room.participants.splice($scope.users.findIndex(user => user.id == sampleUser.id), 1);
+
+                    // Remove the sample user from the user list
+                    $scope.users.splice($scope.users.findIndex(user => user.id == sampleUser.id), 1);
+
+                    console.log($scope.room);
+                    console.log($scope.users);
                 }
             }
 
@@ -114,6 +143,7 @@ app.controller("body",
                 var newParticipantIndex = $scope.currentParticipantIndex() + 1;
                 if (newParticipantIndex >= $scope.room.participants.length) newParticipantIndex = 0;
                 $scope.room.currentSpeaker = $scope.room.participants[newParticipantIndex];
+                $scope.room.nextTurn = new Date().getTime() + 10000;
             }
         }
     ]
