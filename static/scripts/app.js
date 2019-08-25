@@ -1,5 +1,6 @@
 var app = angular.module("app", []);
 
+// FOR DEMONSTRATION ONLY
 var sampleUser = {
     "name": "Greg (You)",
     "id": "4559246",
@@ -14,6 +15,7 @@ app.controller("body",
         "$interval",
         function($scope, $sce, $filter, $interval)
         {
+            // FOR DEMONSTRATION ONLY, NEEDS REWRITE
             $scope.room = {
                 "id": "00a9ff",
                 "name": "Tom, Dick, and Harry's Funtime Extravaganza",
@@ -27,6 +29,7 @@ app.controller("body",
                 ]
             };
 
+            // FOR DEMONSTRATION ONLY, NEEDS REWRITE
             $scope.users = [
                 {
                     "name": "Tom",
@@ -47,10 +50,12 @@ app.controller("body",
 
             $scope.me = undefined;
             $scope.myID = () => $scope.me.id;
+            $scope.extraTime = 0; // FOR DEMONSTRATION ONLY, NEEDS REWRITE
 
             $scope.connected = false;
             $scope.connectClick = function()
             {
+                // FOR DEMONSTRATION ONLY, NEEDS REWRITE
                 $scope.connected = !$scope.connected;
                 if ($scope.connected)
                 {
@@ -139,7 +144,7 @@ app.controller("body",
             {
                 $scope.turnTimeRemaining = $scope.formattedTimeUntilNextTurn();
 
-                // Temporary for demonstration
+                // FOR DEMONSTRATION ONLY, NEEDS REWRITE
                 if ($scope.timeUntilNextTurn() <= 0)
                 {
                     $scope.cycleParticipants();
