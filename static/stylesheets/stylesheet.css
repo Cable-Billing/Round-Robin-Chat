@@ -79,6 +79,15 @@ body
     align-items: flex-start;
     justify-content: center;
 }
+.callWindow .joinCallOverlay
+{
+    display: flex;
+
+    flex-flow: column;
+    flex-grow: 2;
+    align-items: center;
+    justify-content: center;
+}
 .callWindow .callControls
 {
     display: flex;

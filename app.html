@@ -14,14 +14,17 @@
         <div class="roomDetails">
             <h1 class="title" ng-bind="room.name"></h1>
         </div>
-        <div class="participantScroller">
+        <div class="participantScroller" ng-if="connected">
             <div class="participant nextParticipant"><img class="icon" ng-src="{{getParticipantRelative(1).imageUrl}}"></div>
             <div class="participant currentParticipant"><img class="icon" ng-src="{{getParticipantRelative(0).imageUrl}}"></div>
             <div class="participant lastParticipant"><img class="icon" ng-src="{{getParticipantRelative(-1).imageUrl}}"></div>
         </div>
-        <div class="counter" ng-bind="formattedTimeUntilNextTurn()"></div>
+        <div class="counter" ng-bind="formattedTimeUntilNextTurn()" ng-if="connected"></div>
+        <div class="joinCallOverlay" ng-if="!connected">
+            <h2>Join the call by clicking 'Connect' below</h2>
+        </div>
         <div class="callControls">
-            <button class="connect clickable"
+            <button id="connect-disconnect" class="connect clickable"
                     ng-class="connected ? 'connected' : 'disconnected'"
                     ng-click="connectClick()"
                     ng-bind="connected ? 'Disconnect' : 'Connect'"><!-- It's called 'Connect' but it does both -->
