@@ -11,33 +11,33 @@ app.controller("body",
             $scope.room = {
                 "id": "00a9ff",
                 "name": "Tom, Dick, and Harry's Funtime Extravaganza",
-                "host": 1095632,
-                "currentSpeaker": 4294712,
+                "host": "1095632",
+                "currentSpeaker": "4294712",
                 "nextTurn": new Date().getTime() + 10000,
                 "participants": [
-                    1095632,
-                    4294712,
-                    7728621
+                    "1095632",
+                    "4294712",
+                    "7728621"
                 ]
             };
 
-            $scope.users = {
-                "1095632": {
+            $scope.users = [
+                {
                     "name": "Tom",
-                    "id": 1095632,
+                    "id": "1095632",
                     "imageUrl": "https://photos.laineygossip.com/articles/tom-cruise-mummy-30may17-17.jpg"
                 },
-                "4294712": {
+                {
                     "name": "Dick",
-                    "id": 4294712,
+                    "id": "4294712",
                     "imageUrl": "http://afflictor.com/wp-content/uploads/2010/02/Dick_Cheney.jpg.jpeg"
                 },
-                "7728621": {
+                {
                     "name": "Harry",
-                    "id": 7728621,
+                    "id": "7728621",
                     "imageUrl": "https://www.allthetests.com/quiz31/picture/pic_1404655017_1.jpg"
                 }
-            }
+            ];
 
             $scope.connected = false;
             $scope.connectClick = function()
@@ -76,17 +76,19 @@ app.controller("body",
                 var participantID = $scope.room.participants[targetIndex];
 
                 // Make sure they exist in the user list
-                if (!(participantID.toString() in $scope.users)) throw "The participant with id '" + participantID + "' does not exist in the user list";
+                var user = $scope.users.find(user => user.id == participantID);
+                if (!user) throw "The participant with id '" + participantID + "' does not exist in the user list";
 
                 // Return the user data
-                return $scope.users[participantID.toString()];
+                return user;
             }
 
             $scope.getParticipantByID = function(id)
             {
-                if (!(id.toString() in $scope.users)) throw "The participant with id '" + id + "' does not exist in the user list";
+                var user = $scope.users.find(user => user.id == id);
+                if (!user) throw "The user with id '" + id + "' does not exist in the user list";
 
-                return $scope.users[id.toString()];
+                return user;
             }
 
             $scope.timeUntilNextTurn = () => Math.max(new Date($scope.room.nextTurn) - new Date(), 0);
