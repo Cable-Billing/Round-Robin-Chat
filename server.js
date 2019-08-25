@@ -3,17 +3,19 @@ var fs = require('fs'); // FileSystem
 var path = require('path'); // File/directory path parsing
 var bodyParser = require('body-parser'); // Data conversion, JSON parsing
 var uuid = require('uuid/v4'); // UUID generation
+var cookieParser = require('cookie-parser'); // Request cookie parsing
 
 // Set up Express
 var api  = express();
 
 api.use(express.static("./"));
+api.use(cookieParser());
 api.use(express.json());
 
 var data = loadData();
 
 // Get information for room with roomId
-api.get("/room/:roomId", function(req, res) {
+api.get("/api/room/:roomId", function(req, res) {
     if (req.params.roomId in data.rooms) {
         res.send(data.rooms[req.params.roomId]);
     } else {
@@ -22,7 +24,7 @@ api.get("/room/:roomId", function(req, res) {
 });
 
 // Gets information for user with userId
-api.get("/user/:userId", function(req, res) {
+api.get("/api/user/:userId", function(req, res) {
     if (req.params.userId in data.users) {
         res.send(data.users[req.params.userId]);
     } else {
@@ -31,10 +33,18 @@ api.get("/user/:userId", function(req, res) {
 });
 
 // Registers a new user with the name they provide
-api.post("/register", function(req, res) {
+api.post("/api/register", function(req, res) {
     // Make sure we have data to work on
     if (!req.body || !req.body.name) {
         res.status(400).send();
+        return;
+    }
+
+    // Check if they are already registered and have a cookie
+    var cookieUserID = req.cookies["userID"];
+    if (cookieUserID && cookieUserID in data.users) {
+        // Send them a 304 to indicate nothing has changed
+        res.status(304).send();
         return;
     }
 
@@ -47,6 +57,9 @@ api.post("/register", function(req, res) {
 
     // Save to disk
     saveData();
+
+    // Add their new userID to a cookie
+    res.cookie('userID', id);
 
     // Reply with the new user object
     res.send(data.users[id]);
