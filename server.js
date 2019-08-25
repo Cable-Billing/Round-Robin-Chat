@@ -14,22 +14,38 @@ api.use(express.json());
 
 var data = loadData();
 
-// Get information for room with roomId
-api.get("/api/room/:roomId", function(req, res) {
-    if (req.params.roomId in data.rooms) {
-        res.send(data.rooms[req.params.roomId]);
-    } else {
-        res.status(404).send();
+// Get information for room with roomID
+api.get("/api/room/:roomID", function(req, res) {
+    // Make sure we have data to work on
+    if (!req.params.roomID) {
+        res.status(400).send();
+        return;
     }
+
+    // Validate the roomID they've sent
+    var roomID = req.params.roomID;
+    var room = data.rooms.find(room => room.id == roomID);
+    if (!room) {res.status(404).send(); return;};
+
+    // Send the room data
+    res.send(room);
 });
 
-// Gets information for user with userId
-api.get("/api/user/:userId", function(req, res) {
-    if (req.params.userId in data.users) {
-        res.send(data.users[req.params.userId]);
-    } else {
-        res.status(404).send();
+// Gets information for user with userID
+api.get("/api/user/:userID", function(req, res) {
+    // Make sure we have data to work on
+    if (!req.params.userID) {
+        res.status(400).send();
+        return;
     }
+
+    // Find the user with the userID they sent
+    var userID = req.params.userID;
+    var user = data.users.find(user => user.id == userID);
+    if (!user) {res.status(404).send(); return;};
+
+    // Send the user data
+    res.send(user);
 });
 
 // Registers a new user with the name they provide
@@ -42,7 +58,7 @@ api.post("/api/register", function(req, res) {
 
     // Check if they are already registered and have a cookie
     var cookieUserID = req.cookies["userID"];
-    if (cookieUserID && cookieUserID in data.users) {
+    if (cookieUserID && data.users.find(user => user.id == cookieUserID)) {
         // Send them a 304 to indicate nothing has changed
         res.status(304).send();
         return;
@@ -50,10 +66,10 @@ api.post("/api/register", function(req, res) {
 
     // Generate a new ID and add them to the user list
     var id = "U-" + uuid();
-    data.users[id] = {
-        "name": req.body.name,
-        "id": id
-    };
+    data.users.push({
+        "id": id,
+        "name": req.body.name
+    });
 
     // Save to disk
     saveData();
@@ -62,7 +78,7 @@ api.post("/api/register", function(req, res) {
     res.cookie('userID', id);
 
     // Reply with the new user object
-    res.send(data.users[id]);
+    res.send(data.users.find(user => user.id == id));
 });
 
 // Get the user's user object
@@ -70,14 +86,43 @@ api.get("/api/me", function(req, res) {
     // Make sure we have data to work on
     if (!req.cookies["userID"]) {
         res.status(401).send();
+        return;
     }
 
-    // Check if the user exists
+    // Validate the userID they've sent
     var userID = req.cookies["userID"];
-    if (!(userID in data.users)) res.status(404).send();
+    var user = data.users.find(user => user.id == userID);
+    if (!user) {res.status(401).send(); return;};
 
     // Send their user object
-    res.send(data.users[userID]);
+    res.send(user);
+});
+
+// Get the user's current room
+api.get("/api/currentroom", function(req, res) {
+    // Make sure we have data to work on
+    if (!req.cookies["userID"]) {
+        res.status(401).send();
+        return;
+    }
+
+    // Validate the userID they've sent
+    var userID = req.cookies["userID"];
+    var user = data.users.find(user => user.id == userID);
+    if (!user) {res.status(401).send(); return;};
+
+    // Find the room the user is currently in
+    for (var room of data.rooms) {
+        console.log(room);
+        console.log(user);
+        if (room.participants.includes(user.id)) {
+            res.send(room);
+            return;
+        }
+    }
+
+    // Couldn't find the current room
+    res.status(404).send();
 });
 
 // Adds the user to a room and sends them the info
@@ -88,22 +133,27 @@ api.get("/api/join/:roomID", function(req, res) {
         return;
     } else if (!req.cookies["userID"]) {
         res.status(401).send();
+        return;
     }
 
-    // Validate the user and group IDs they've sent
+    // Validate the userID they've sent
     var userID = req.cookies["userID"];
+    var user = data.users.find(user => user.id == userID);
+    if (!user) {res.status(401).send(); return;};
+
+    // Validate the roomID they've sent
     var roomID = req.params.roomID;
-    if (!(userID in data.users)) res.status(401).send();
-    if (!(roomID in data.rooms)) res.status(404).send();
+    var room = data.rooms.find(room => room.id == roomID);
+    if (!room) {res.status(404).send(); return;};
 
     // Add the user to the room if they aren't in it already
-    if (!(userID in data.rooms[roomID].participants)) {
-        data.rooms[roomID].participants.push(userID);
+    if (!(userID in room.participants)) {
+        room.participants.push(userID);
         saveData();
     }
 
     // Send them the room data
-    res.send(data.rooms[roomID]);
+    res.send(room);
 });
 
 // Start listening

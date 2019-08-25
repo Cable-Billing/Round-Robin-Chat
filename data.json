@@ -1,6 +1,6 @@
 {
-    "rooms": {
-        "R-89deabb8-47cb-4f18-8a92-27b6efec21ca": {
+    "rooms": [
+        {
             "id": "R-89deabb8-47cb-4f18-8a92-27b6efec21ca",
             "name": "The Game",
             "host": "U-3d0e8d88-fae8-410f-bf5a-b2121bac421b",
@@ -13,23 +13,23 @@
                 "U-e77adf32-9383-4d52-a15a-9e0b3f9f4709"
             ]
         }
-    },
-    "users": {
-        "U-3d0e8d88-fae8-410f-bf5a-b2121bac421b": {
+    ],
+    "users": [
+        {
             "name": "Bob",
             "id": "U-3d0e8d88-fae8-410f-bf5a-b2121bac421b"
         },
-        "U-a6476a29-e8f5-4175-bb3d-3f31c9e6c954": {
+        {
             "name": "Anna",
             "id": "U-a6476a29-e8f5-4175-bb3d-3f31c9e6c954"
         },
-        "U-0e4d7b23-5106-422d-a2db-bb52ca1c4b5f": {
+        {
             "name": "Lukas",
             "id": "U-0e4d7b23-5106-422d-a2db-bb52ca1c4b5f"
         },
-        "U-e77adf32-9383-4d52-a15a-9e0b3f9f4709": {
+        {
             "name": "Alex",
             "id": "U-e77adf32-9383-4d52-a15a-9e0b3f9f4709"
         }
-    }
+    ]
 }
