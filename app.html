@@ -24,10 +24,17 @@
             <h2>Join the call by clicking 'Connect' below</h2>
         </div>
         <div class="callControls">
+            <button class="skip" style="opacity: 0" ng-if="connected">Skip</button><!-- Hackity hack, I want my money back -->
             <button id="connect-disconnect" class="connect clickable"
                     ng-class="connected ? 'connected' : 'disconnected'"
                     ng-click="connectClick()"
                     ng-bind="connected ? 'Disconnect' : 'Connect'"><!-- It's called 'Connect' but it does both -->
+            </button>
+            <button class="skip clickable"
+                    ng-click="skipTurn()"
+                    ng-if="connected"
+                    ng-disabled="!isMyTurn()">
+                    Skip
             </button>
         </div>
     </div>

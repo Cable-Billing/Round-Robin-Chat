@@ -45,6 +45,9 @@ app.controller("body",
                 }
             ];
 
+            $scope.me = undefined;
+            $scope.myID = () => $scope.me.id;
+
             $scope.connected = false;
             $scope.connectClick = function()
             {
@@ -56,6 +59,9 @@ app.controller("body",
 
                     // Add the sample user to the user list
                     $scope.users.push(sampleUser);
+
+                    // Assign that user as 'me'
+                    $scope.me = $scope.users.find(user => user.id == sampleUser.id);
 
                     // Add the sample user to the participant list
                     $scope.room.participants.push(sampleUser.id);
@@ -76,6 +82,9 @@ app.controller("body",
 
                     // Remove the sample user from the user list
                     $scope.users.splice($scope.users.findIndex(user => user.id == sampleUser.id), 1);
+
+                    // Clear 'me'
+                    $scope.me = undefined;
 
                     console.log($scope.room);
                     console.log($scope.users);
@@ -120,9 +129,11 @@ app.controller("body",
                 return user;
             }
 
+            // FOR DEMONSTRATION ONLY, NEEDS REWRITE
+            $scope.isMyTurn = () => $scope.room.currentSpeaker == $scope.me.id;
+
             $scope.timeUntilNextTurn = () => Math.max(new Date($scope.room.nextTurn) - new Date(), 0);
             $scope.formattedTimeUntilNextTurn = () => Math.max(($scope.timeUntilNextTurn()/1000), 0).toFixed(2); // Just manually format the damn thing
-
             $scope.turnTimeRemaining = $scope.formattedTimeUntilNextTurn();
             $scope.updateTurnTimeRemaining = function()
             {
@@ -135,7 +146,6 @@ app.controller("body",
                     $scope.room.nextTurn = new Date().getTime() + 10000;
                 }
             }
-
             $interval($scope.updateTurnTimeRemaining, 41);
 
             $scope.cycleParticipants = function()
@@ -144,6 +154,13 @@ app.controller("body",
                 if (newParticipantIndex >= $scope.room.participants.length) newParticipantIndex = 0;
                 $scope.room.currentSpeaker = $scope.room.participants[newParticipantIndex];
                 $scope.room.nextTurn = new Date().getTime() + 10000;
+            }
+
+            $scope.skipTurn = function() {
+                if ($scope.isMyTurn()) {
+                    $scope.cycleParticipants();
+                    // TODO: Save the remaining time somewhere???
+                }
             }
         }
     ]

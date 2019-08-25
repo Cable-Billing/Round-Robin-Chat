@@ -98,10 +98,12 @@ body
     align-items: center;
     justify-content: center;
 }
-.callWindow .callControls .connect
+.callWindow .callControls button
 {
     font-size: 20pt;
 
+    margin-right: 10px;
+    margin-left: 10px;
     padding-top: 10px;
     padding-right: 20px;
     padding-bottom: 10px;
@@ -123,6 +125,19 @@ body
 {
     color: #eee;
     background-color: #549e47;
+}
+.callWindow .callControls .skip
+{
+    color: #eee;
+    background-color: #444;
+}
+.callWindow .callControls button:disabled
+{
+    cursor: auto !important;
+
+    color: #bbb !important;
+    background-color: #666 !important;
+    box-shadow: 1px 1px 10px 0 rgba(0,0,0,.2);
 }
 
 .sidebar
