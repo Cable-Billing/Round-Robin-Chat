@@ -49,7 +49,7 @@ api.post("/api/register", function(req, res) {
     }
 
     // Generate a new ID and add them to the user list
-    var id = uuid();
+    var id = "U-" + uuid();
     data.users[id] = {
         "name": req.body.name,
         "id": id
